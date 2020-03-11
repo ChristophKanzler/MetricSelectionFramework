@@ -17,6 +17,8 @@
 %
 % Copyright (C) 2020, Christoph M. Kanzler, ETH Zurich
 % Contact: christoph.kanzler@hest.ethz.ch
+%
+% Thanks to Pietro Oldrati for code cleanup.
 
 disp('-------------------------------------------------------------------------------------------------');
 disp('Examplary code for the paper:')
