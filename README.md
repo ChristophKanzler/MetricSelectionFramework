@@ -6,6 +6,6 @@ A data-driven framework for the selection and validation of digital health metri
 
 This code will simulate data for multiple digital health metrics for a reference (e.g., neurologically intact) and a target (e.g., neurologocially impaired) population. Based on these data, the proposed multi-step metric selection framework will be applied an all evaluation criteria and plots from the paper will be generated. 
 
-This approach is expected to be applicable for any 1D, discrete digital health metric for that data for a reference (e.g., neurologically intact) and  target (e.g,. neurologically impaired) population is available. Ideally, one of these populations shoudl have test-retest data available as well.
+This approach is expected to be applicable for any 1D, discrete digital health metric for that data for a reference (e.g., neurologically intact) and  target (e.g,. neurologically impaired) population is available. Also, one of these populations should have test-retest data available as well.
 
 The framework allows the selection of robust metrics that have highest potential for repeatedly assessing impairments based on discriminant validity, test-retest reliability, measurement error, learning effects, and inter-metric correlations.
