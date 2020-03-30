@@ -1,14 +1,15 @@
-function [p_vals,all_metric_avg_effect_sizes] = visualize_impairment_profile_non_parametric_mad(population, abnormal_behaviour_cut_offs)
+function [p_vals,all_metric_avg_effect_sizes] = visualize_impairment_profile_non_parametric_mad(population, metrics, abnormal_behaviour_cut_offs)
 %% Make boxplots of metric groups to 'disease_severity' column
 % Normalize everything w.r.t. worst neurological subject (highest value).
 deactivate_stats = false;
 n_metrics = length(abnormal_behaviour_cut_offs);
 for i = 1:n_metrics
-    max_val = max(population.(['metric' mat2str(i) '_c']));
-    population.(['metric' mat2str(i) '_norm']) = (population.(['metric' mat2str(i) '_c']) ./ max_val) .* 100;
+    metric_name = metrics{i};
+    max_val = max(population.([metric_name '_c']));
+    population.([metric_name '_norm']) = (population.([metric_name '_c']) ./ max_val) .* 100;
     abnormal_behaviour_cut_offs(i) = (abnormal_behaviour_cut_offs(i) / max_val * 100);
 end
-labels = strcat('Metric', arrayfun(@(n) num2str(n), (1:length(abnormal_behaviour_cut_offs))', 'UniformOutput', false));
+labels = metrics;
 
 %init figure
 figure('units','normalized','outerposition',[0 0 1 1]);
@@ -269,8 +270,6 @@ fontSize = 17;
 box off;
 xlim([min(xlim)-spacing_between_metrics max(xlim)])
 set(gca,'XTick',x_middles);
-labels = cellfun(@(x) strrep(x,'spectral arc length','SPARC'),labels,'UniformOutput',false);
-labels = cellfun(@(x) strrep(x,'Spectral arc length','SPARC'),labels,'UniformOutput',false);
 set(gca,'XTickLabel',labels);
 
 xtickangle(45);

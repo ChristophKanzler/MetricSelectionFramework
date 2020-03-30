@@ -19,4 +19,8 @@ end
 [y_all] = boxcox(lambda, y_all);
 y_reference = y_all(1:length(y_reference));
 y_target = y_all(length(y_reference)+1:end);
+
+if(~isempty(find(~isreal(y_reference))) || ~isempty(find(~isreal(y_target))))
+    error('Imaginary data after box-cox transform!');
+end
 end

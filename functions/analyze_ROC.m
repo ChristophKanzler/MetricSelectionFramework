@@ -1,4 +1,4 @@
-function [AUC,true_positive_rates,false_positive_rates,iter_range] = analyze_ROC(y,inds_healthy)
+function [AUC,true_positive_rates,false_positive_rates,iter_range] = analyze_ROC(y, inds_healthy)
 
 if(nargin == 1)
     inds_healthy = y(:,end);

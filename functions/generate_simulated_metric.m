@@ -1,8 +1,6 @@
-function metric = generate_simulated_metric(m,v,age)
+function metric = generate_simulated_metric(m, v, age)
 
 do_log = 0;
-%rng('default');
-%rng(1);
 constant = zeros(length(age), 1);
 for i = 1:length(age)
     if(do_log)
@@ -14,4 +12,4 @@ for i = 1:length(age)
     end
 end
 
-metric = abs(constant).*age.^2;
+metric = (abs(constant)/1000).*age.^2;

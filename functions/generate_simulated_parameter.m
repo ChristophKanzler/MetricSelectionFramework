@@ -1,4 +1,4 @@
-function metric = generate_simulated_parameter(m,v,num_points,do_log)
+function metric = generate_simulated_parameter(m, v, num_points, do_log)
 
 
 rng('default');
