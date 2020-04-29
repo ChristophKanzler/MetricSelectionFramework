@@ -47,7 +47,7 @@ The complete call would then look similar to the following.
 
 For a complete description of the available parameters and the output see the next paragraph.
 
-## Example output
+## Example execution
 The tool outputs the results both on the MATLAB standard output or by displaying figures. In the following, we go through a run of the framework using the default simulated data. You can advance to the next step by clicking with the mouse on displayed figures.
 
 ### Postprocessing, metric selection and validation steps 1 and 2
