@@ -47,6 +47,24 @@ The complete call would then look similar to the following.
 
 For a complete description of the available parameters and the output see the next paragraph.
 
+## Parameters and outputs
+<b>Inputs</b> (name-value pairs):
+* `Effects`: effects for the confound compensation.
+* `ReferenceTable`: table holding features and effects of the healthy population. If `ImpairedTable` is specified this parameter is required.
+* `ImpairedTable`: table holding features and effects of the impaired population. If `ReferenceTable` is specified this parameter is required.
+* `Metrics`: list of metrics to evaluate. Required when using custom data (previous two parameters).
+* `NumFactors`: number of factors for the factor analysis. Obtained with Scree plot (next parameter).
+* `ShowScreePlot`: boolean flag to show scree plot for the number of factors.
+* `NumSimSubj`: number of subjects in the simulated data.
+* `NumSimMetrics`: number of metrics in the simulated data.
+* `SavePlots`: boolean flag to save the plot figures in the `output_plots` directory.
+
+<b>Outputs</b>:
+* `ref_table` and `impaired_table`: tables with the original and compensated metrics.
+* `metric_scores`: results of the per-metric analysis.
+* `partialcorrs`: partial correlations between metrics.
+* `factor_analysis`: result of the factor analysis.
+
 ## Example execution
 The tool outputs the results both on the MATLAB standard output or by displaying figures. In the following, we go through a run of the framework using the default simulated data. You can advance to the next step by clicking with the mouse on displayed figures.
 
