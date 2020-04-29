@@ -24,6 +24,7 @@ To run the feature selection on your data, you should make sure it meets the fol
 * If you want to perform confound correction using a linear mixed-effect model, the variables used to fit the model should be included in the data-set.
 * Your data should contain a group of healthy subject, used as reference, and the set of impaired patients.
 * If you want to run the sub-population analysis on the disease severity (Further metric validation: step 2), you should include a column named `disease_severity` that specifies the severity of the disease with labels.
+
 The resulting data-set should consist of two separate MATLAB tables, one for the healthy and one for the patients. Assume you want to run feature selection on a set of N features with names f<sub>1</sub>,
 f<sub>1</sub>, f<sub>2</sub>, ..., f<sub>N</sub>, and perform confound correction with M effects with names e<sub>1</sub>, e<sub>2</sub>, ..., e<sub>M</sub>. Both tables should have the same structure, depicted in the following scheme. 
 
