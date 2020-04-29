@@ -1,4 +1,4 @@
-function [reference_population, impaired_population, metric_scores, partialcorrs, factor_analysis] = metric_selection_framework(varargin)
+function [ref_table, impaired_table, metric_scores, partialcorrs, factor_analysis] = metric_selection_framework(varargin)
 %%% Exemplary code for
 %
 % "A data-driven framework for the
@@ -42,8 +42,8 @@ function [reference_population, impaired_population, metric_scores, partialcorrs
 %          'SavePlots'      - boolean flag to save the plot figures in the
 %                             'output_plots' directory.
 %     Outputs:
-%          * reference_population and impaired_population - tables with 
-%            the original andcompensated metrics
+%          * ref_table and impaired_table - tables with the original and
+%            compensated metrics.
 %          * metric_scores - results of the per-metric analysis.
 %          * partialcorrs - partial correlations between metrics.
 %          * factor_analysis - result of the factor analysis.
@@ -116,11 +116,11 @@ k = p.Results.NumFactors;
 
 %% Generate or load data. 
 if (use_simulated_data)
-    [reference_population, impaired_population] = simulate_data(seed, n_simulated_subjects, n_simulated_metrics, mean_age_ref, var_age_ref, mean_age_imp, var_age_imp);
+    [ref_table, impaired_table] = simulate_data(seed, n_simulated_subjects, n_simulated_metrics, mean_age_ref, var_age_ref, mean_age_imp, var_age_imp);
     metrics = strcat("metric", string(1:n_simulated_metrics));
 else
-    reference_population = p.Results.ReferenceTable;
-    impaired_population = p.Results.ImpairedTable;
+    ref_table = p.Results.ReferenceTable;
+    impaired_table = p.Results.ImpairedTable;
     
     if any(strcmp(p.UsingDefaults, 'Metrics'))
         error('You input custom data, but did not specify the name of the metrics to validate. Please, provide the required parameter.');
@@ -128,13 +128,13 @@ else
     metrics = p.Results.Metrics;
     
     % Checking that the provided tables contain all the required columns.
-    ref_error = check_data_table_cols(reference_population, effects, metrics);
+    ref_error = check_data_table_cols(ref_table, effects, metrics);
     
     if ~isempty(ref_error)
         error(strcat("The reference data table ", ref_error))
     end
     
-    imp_error = check_data_table_cols(impaired_population, effects, metrics);
+    imp_error = check_data_table_cols(impaired_table, effects, metrics);
     
     if ~isempty(imp_error)
         error(strcat("The impaired data table ", ref_error))
@@ -143,7 +143,7 @@ end
 n_metrics = length(metrics);
 
 %%  Postprocessing (modeling of confounds).
-[reference_population, impaired_population, lme] = postprocess_metrics(metrics, effects, reference_population, impaired_population);
+[ref_table, impaired_table, lme] = postprocess_metrics(metrics, effects, ref_table, impaired_table);
 
 %% Metric selection & validation: steps 1 and 2.
 metrics_mat = table();
@@ -163,18 +163,18 @@ for i = 1:n_metrics
     disp(['<strong>Results for metric ' metric_name ':</strong>']);
     
     % Plot confound correction results.
-    plot_confound_correction(reference_population, effects, metric_name)
+    plot_confound_correction(ref_table, effects, metric_name)
     
     % Standardize metric w.r.t reference population.
-    [reference_population, impaired_population] = standardize_reference(reference_population, impaired_population, metric_name);
-    [reference_population, impaired_population] = standardize_reference(reference_population, impaired_population, metric_comp);
-    [reference_population, impaired_population] = standardize_reference(reference_population, impaired_population, metric_retest_comp);
+    [ref_table, impaired_table] = standardize_reference(ref_table, impaired_table, metric_name);
+    [ref_table, impaired_table] = standardize_reference(ref_table, impaired_table, metric_comp);
+    [ref_table, impaired_table] = standardize_reference(ref_table, impaired_table, metric_retest_comp);
     
-    [C1s(i), C2s(i), AUCs(i), SRDs(i), ICCs(i), slopes(i)] = analyze_metric(reference_population, impaired_population, lme, metric_name);
+    [C1s(i), C2s(i), AUCs(i), SRDs(i), ICCs(i), slopes(i)] = analyze_metric(ref_table, impaired_table, lme, metric_name);
     disp('Press a button to continue...');
     waitforbuttonpress;
 
-    metrics_mat.(metric_comp) = reference_population.(metric_comp);
+    metrics_mat.(metric_comp) = ref_table.(metric_comp);
 end
 metric_scores.metric = metrics';
 metric_scores.C1 = C1s;
@@ -202,7 +202,7 @@ close all;
 factor_analysis = analyze_factors(metrics, metrics_mat, k, show_scree_plot);
 
 %% Further metric validation: step 2.
-population = [reference_population; impaired_population];
+population = [ref_table; impaired_table];
 population.id = (1:height(population))';
 metrics_mat = table();
 for i = 1:n_metrics
