@@ -34,11 +34,16 @@ f<sub>1</sub>, f<sub>2</sub>, ..., f<sub>N</sub>, and perform confound correctio
 
 You can then save these tables in two separate `.mat` files. <b>Please make sure to add the _restest suffix on the column names of the re-test measurements of each feature!</b>
 
-The procedure to use the code with your data is then the following.
-1) Set the `use_simulated_data` boolean to `false` (line 43)
-2) Change lines 44 and 45 to load the correct `.mat` files containing the tables for the healthy and patients group, respectively.
-3) Modify the `metrics` array (line 48) to include the name of all the metrics you want to run the selection on (f<sub>1</sub>, f<sub>2</sub>, ..., f<sub>N</sub>).
-4) Populate the `effects` array (line 51) with the effects you want to run the confound compensation with (e<sub>1</sub>, e<sub>2</sub>, ..., e<sub>M</sub>).
+Then, to use the code with your data you should set the following name-value arguments of the `metric_selection_framework` function.
+* `ReferenceTable` and `ImpairedTable` should be set to the tables containing the data for the healthy and patients group, respectively.
+* `Metrics` should be a cell or string array with the names of all the metrics you want to run the selection on (f<sub>1</sub>, f<sub>2</sub>, ..., f<sub>N</sub>).
+* `Effects` should be a cell or string array with the effects you want to run the confound compensation with (e<sub>1</sub>, e<sub>2</sub>, ..., e<sub>M</sub>).
+
+The complete call would then look similar to the following.
+
+`[ref_table, impaired_table, metric_scores, partialcorrs, factor_analysis] = metric_selection_framework('ReferenceTable', ref_table, 'ImpairedTable', impaired_table, 'Metrics', metrics, 'Effects', effects)`
+
+For a complete description of the available parameters and the output see the next paragraph.
 
 ## Example output
 The tool outputs the results both on the MATLAB standard output or by displaying figures. In the following, we go through a run of the framework using the default simulated data. You can advance to the next step by clicking with the mouse on displayed figures.
