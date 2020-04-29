@@ -15,7 +15,7 @@ This code requires MATLAB and the following toolboxes.
 * Financial Toolbox
 
 # Usage
-To run the analysis with the default simulated data, simply run `main.m`. The framework can also be used for feature selection using another data-set. 
+To run the analysis with the default simulated data, simply run the `metric_selection_framework` function without arguments. The framework can also be used for feature selection using another data-set, and some parameters can be tweaked. 
 
 ## Using a custom data-set
 To run the feature selection on your data, you should make sure it meets the following requirements.
