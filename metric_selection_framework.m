@@ -22,8 +22,7 @@ function [ref_table, impaired_table, metric_scores, partialcorrs, factor_analysi
 % Thanks to Pietro Oldrati for code cleanup.
 
 % Syntax: function metric_selection_framework([Name, Value]) 
-%      
-%     Input (name-value pairs):
+%     Inputs (name-value pairs):
 %          'Effects'        - effects for the confound compensation.
 %          'ReferenceTable' - table holding features and effects of the
 %                             healthy population. If 'ImpairedTable' is
