@@ -32,7 +32,7 @@ f<sub>1</sub>, f<sub>2</sub>, ..., f<sub>N</sub>, and perform confound correctio
    | 2             | ...           | ... | ...           | ...           | ...                  | ... | ...          | ...        |
    | ...           | ...           | ... | ...           | ...           | ...                  | ... | ...          | ...        |
 
-You can then save these tables in two separate `.mat` files. <b>Please make sure to add the _restest suffix on the column names of the re-test measurements of each feature!</b>
+<b>Please make sure to add the _restest suffix on the column names of the re-test measurements of each feature!</b>
 
 Then, to use the code with your data you should set the following name-value arguments of the `metric_selection_framework` function.
 * `ReferenceTable` and `ImpairedTable` should be set to the tables containing the data for the healthy and patients group, respectively.
