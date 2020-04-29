@@ -23,7 +23,7 @@ To run the feature selection on your data, you should make sure it meets the fol
 * Single measurements of a feature should consist of scalars.
 * If you want to perform confound correction using a linear mixed-effect model, the variables used to fit the model should be included in the data-set.
 * Your data should contain a group of healthy subject, used as reference, and the set of impaired patients.
-The resulting data-set should consist of two separate MATLAB tables, one for the healthy and one for the patients. Assume you want to run feature selection on a set of N features with names f<sub>1</sub>x
+The resulting data-set should consist of two separate MATLAB tables, one for the healthy and one for the patients. Assume you want to run feature selection on a set of N features with names f<sub>1</sub>,
 f<sub>1</sub>, f<sub>2</sub>, ..., f<sub>N</sub>, and perform confound correction with M effects with names e<sub>1</sub>, e<sub>2</sub>, ..., e<sub>M</sub>. Both tables should have the same structure, depicted in the following scheme. 
 
    | Unique ID     | e<sub>1</sub> | ... | e<sub>M</sub> | f<sub>1</sub> | f<sub>1</sub>_retest | ... | f<sub>N</sub> | f<sub>N</sub>_retest |
