@@ -1,4 +1,4 @@
-function [p_vals,all_metric_avg_effect_sizes] = visualize_impairment_profile_non_parametric_mad(population, metrics, abnormal_behaviour_cut_offs)
+function [p_vals,all_metric_avg_effect_sizes] = visualize_impairment_profile_non_parametric_mad(population, metrics, abnormal_behaviour_cut_offs, save_plots)
 %% Make boxplots of metric groups to 'disease_severity' column
 % Normalize everything w.r.t. worst neurological subject (highest value).
 deactivate_stats = false;
@@ -292,3 +292,7 @@ ylim([-90 100]);
 yt = get(gca, 'ytick');
 ytl = strcat(strtrim(cellstr(num2str(yt'))), '%');
 set(gca, 'yticklabel', ytl);
+
+if save_plots
+    save_plot(gcf, 'subpop.pdf');
+end

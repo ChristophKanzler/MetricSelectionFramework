@@ -1,4 +1,4 @@
-function AUC = get_abnormal_behaviour_cut_off_ROC_population_based(dt_healthy, dt_impaired, metric_name)
+function AUC = get_abnormal_behaviour_cut_off_ROC_population_based(dt_healthy, dt_impaired, metric_name, save_plots)
 %% ROC analysis to generate abnormal behaviour cut-offs
 
 all_metric = vertcat(dt_healthy, dt_impaired);
@@ -19,7 +19,7 @@ if(length(UB)==3)
 end
 
 %% plot ROC
-rocf = figure;
+h = figure;
 hold on;
 plot(false_positive_rates,true_positive_rates,'-','Color','k');
 plot(false_positive_rates,true_positive_rates,'.','Color','k');
@@ -51,4 +51,8 @@ plot(x,x,'--k');
 
 legend('Reference population vs impaired subjects', 'Performance of random guessing');
 title(['Metric discriminant validity (ROC curve) - ' metric_name]);
+
+if save_plots
+    save_plot(h, [metric_name '_roc.pdf']);
+end
 % uiwait(rocf);

@@ -2,10 +2,10 @@
 function population = initialize_metrics(population, n_metrics, is_impaired)
 if (~is_impaired)
     mu_means = 30;
-    var_means = 8;
+    var_means = 5;
 else
     mu_means = 40;
-    var_means = 20;
+    var_means = 10;
 end
 
 variability = 2;

@@ -66,12 +66,12 @@ addParameter(p, 'Metrics', {}, @(x) assert(iscellstr(x) || isstring(x), ...
     'Metrics should be specified as a cell array or string array of metric names.'));
 addParameter(p, 'NumFactors', defaultNumFactors, @(x) assert(isinteger(x) && isscalar(x) && x > 0, ...
     'The number of effects should be a positive scalar integer.'));
-addParameter(p, 'ShowScreePlot', defaultShowScreePlot, @isboolean);
+addParameter(p, 'ShowScreePlot', defaultShowScreePlot, @islogical);
 addParameter(p, 'NumSimSubj', defaultNumSimSubj, @(x) assert(isinteger(x) && isscalar(x) && x > 0, ...
     'The number of simulated subjects should be a positive scalar integer.'));
 addParameter(p, 'NumSimMetrics', defaultNumSimMetrics, @(x) assert(isinteger(x) && isscalar(x) && x > 0, ...
     'The number of simulated metrics should be a positive scalar integer.'));
-addParameter(p, 'SavePlots', defaultSavePlots, @isboolean);
+addParameter(p, 'SavePlots', defaultSavePlots, @islogical);
 parse(p, varargin{:});
 
 disp('-------------------------------------------------------------------------------------------------');
@@ -98,6 +98,11 @@ elseif any(strcmp(p.UsingDefaults, 'ImpairedTable')) && ~any(contains(p.UsingDef
 end
 use_simulated_data = any(strcmp(p.UsingDefaults, 'ReferenceTable')) || ... 
     any(strcmp(p.UsingDefaults, 'ImpairedTable')); 
+save_plots = p.Results.SavePlots;
+
+if save_plots
+    mkdir('output_plots');
+end
 
 effects = p.Results.Effects;
 
@@ -162,14 +167,14 @@ for i = 1:n_metrics
     disp(['<strong>Results for metric ' metric_name ':</strong>']);
     
     % Plot confound correction results.
-    plot_confound_correction(ref_table, effects, metric_name)
+    plot_confound_correction(ref_table, effects, metric_name, save_plots)
     
     % Standardize metric w.r.t reference population.
     [ref_table, impaired_table] = standardize_reference(ref_table, impaired_table, metric_name);
     [ref_table, impaired_table] = standardize_reference(ref_table, impaired_table, metric_comp);
     [ref_table, impaired_table] = standardize_reference(ref_table, impaired_table, metric_retest_comp);
     
-    [C1s(i), C2s(i), AUCs(i), SRDs(i), ICCs(i), slopes(i)] = analyze_metric(ref_table, impaired_table, lme, metric_name);
+    [C1s(i), C2s(i), AUCs(i), SRDs(i), ICCs(i), slopes(i)] = analyze_metric(ref_table, impaired_table, lme, metric_name, save_plots);
     disp('Press a button to continue...');
     waitforbuttonpress;
 
@@ -193,12 +198,17 @@ heatmap(partialcorrs, metrics, metrics, '%0.2f', 'Colormap', 'money', ...
     'FontSize', 9, 'Colorbar', {'SouthOutside'}, 'MinColorValue', -1, 'MaxColorValue', 1);
 title('Inter-metric correlation')
 movegui(hm_fig, 'center');
+
+if save_plots
+    save_plot(hm_fig, 'partialcorrs.pdf');
+end
+
 disp('Press a button to continue...');
 waitforbuttonpress;
 close all;
 
 %% Further metric validation: step 1.
-factor_analysis = analyze_factors(metrics, metrics_mat, k, show_scree_plot);
+factor_analysis = analyze_factors(metrics, metrics_mat, k, show_scree_plot, save_plots);
 
 %% Further metric validation: step 2.
 population = [ref_table; impaired_table];
@@ -214,7 +224,8 @@ waitforbuttonpress;
 close all;
 
 % Calculating the cutoff for the metrics with the 95% percentile.
+if any(strcmp(population.Properties.VariableNames, 'disease_severity'))
 abnormal_behaviour_cut_offs = prctile(metrics_mat, 95, 1)';
-visualize_impairment_profile_non_parametric_mad(population, metrics, abnormal_behaviour_cut_offs);
+visualize_impairment_profile_non_parametric_mad(population, metrics, abnormal_behaviour_cut_offs, save_plots);
 end
 

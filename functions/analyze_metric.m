@@ -1,4 +1,4 @@
-function [C1, C2, AUC, SRD, ICC, slope] = analyze_metric(reference_population, impaired_population, lme, metric_name)
+function [C1, C2, AUC, SRD, ICC, slope] = analyze_metric(reference_population, impaired_population, lme, metric_name, save_plots)
 addpath(genpath(pwd));
 
 metric_transf = [metric_name '_t'];
@@ -13,7 +13,7 @@ y_adj_pred = predict(lme, reference_population, 'Conditional', true);
 [~, C1, C2] = mae_based_model_evaluation(reference_population.(metric_transf), y_adj_pred);
 
 %% ROC curve of using this metric for classifying healthy vs patients with varying cutoff (STEP 2b).
-AUC = get_abnormal_behaviour_cut_off_ROC_population_based(reference_population.(metric_comp), impaired_population.(metric_comp), metric_name);
+AUC = get_abnormal_behaviour_cut_off_ROC_population_based(reference_population.(metric_comp), impaired_population.(metric_comp), metric_name, save_plots);
 
 %% ICC to check for intra-subject variability in test and retest (STEP 2).
 ICC = ICC_mReliability(reference_population.(metric_comp), reference_population.(metric_retest_comp));

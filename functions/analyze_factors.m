@@ -1,12 +1,15 @@
-function [loadings_t] = analyze_factors(metrics, metrics_mat, k, show_scree_plot)
+function [loadings_t] = analyze_factors(metrics, metrics_mat, k, show_scree_plot, save_plots)
 fprintf('\n\n<strong>Further metric validation: STEP 1</strong>\n')
 % Scree plot to select the number of factors.
 if(show_scree_plot)
-    figure();
+    h = figure();
     plot(sort(eig(cov(metrics_mat)), 'descend'));
     title('Scree plot');
     xlabel('Factor number');
     ylabel('Eigenvalue');
+    if save_plots
+        save_plot(h, 'scree.pdf');
+    end
 end
 fprintf('According to the elbow criteria, k=%d was chosen for the factor analysis.\n', k)
 
