@@ -23,14 +23,16 @@ To run the feature selection on your data, you should make sure it meets the fol
 * Single measurements of a feature should consist of scalars.
 * If you want to perform confound correction using a linear mixed-effect model, the variables used to fit the model should be included in the data-set.
 * Your data should contain a group of healthy subject, used as reference, and the set of impaired patients.
+* If you want to run the sub-population analysis on the disease severity (Further metric validation: step 2), you should include a column named `disease_severity` that specifies the severity of the disease with labels.
+
 The resulting data-set should consist of two separate MATLAB tables, one for the healthy and one for the patients. Assume you want to run feature selection on a set of N features with names f<sub>1</sub>,
 f<sub>1</sub>, f<sub>2</sub>, ..., f<sub>N</sub>, and perform confound correction with M effects with names e<sub>1</sub>, e<sub>2</sub>, ..., e<sub>M</sub>. Both tables should have the same structure, depicted in the following scheme. 
 
-   | Unique ID     | e<sub>1</sub> | ... | e<sub>M</sub> | f<sub>1</sub> | f<sub>1</sub>_retest | ... | f<sub>N</sub> | f<sub>N</sub>_retest |
-   | ------------- | ------------- | --- | ------------- | ------------- | -------------------- | --- | ------------ | ---------- |
-   | 1             | ...           | ... | ...           | ...           | ...                  | ... | ...          | ...        |
-   | 2             | ...           | ... | ...           | ...           | ...                  | ... | ...          | ...        |
-   | ...           | ...           | ... | ...           | ...           | ...                  | ... | ...          | ...        |
+   | Unique ID     | e<sub>1</sub> | ... | e<sub>M</sub> | f<sub>1</sub> | f<sub>1</sub>_retest | ... | f<sub>N</sub> | f<sub>N</sub>_retest | disease_severity
+   | ------------- | ------------- | --- | ------------- | ------------- | -------------------- | --- | ------------ | ---------- | ---------- | 
+   | 1             | ...           | ... | ...           | ...           | ...                  | ... | ...          | ...        | "low"        |
+   | 2             | ...           | ... | ...           | ...           | ...                  | ... | ...          | ...        | "high"        |
+   | ...           | ...           | ... | ...           | ...           | ...                  | ... | ...          | ...        | ...        |
 
 <b>Please make sure to add the _restest suffix on the column names of the re-test measurements of each feature!</b>
 
@@ -45,7 +47,27 @@ The complete call would then look similar to the following.
 
 For a complete description of the available parameters and the output see the next paragraph.
 
-## Example output
+## Parameters and outputs
+The method signature is `[ref_table, impaired_table, metric_scores, partialcorrs, factor_analysis] = metric_selection_framework(Name, Value)`
+
+<b>Inputs</b> (name-value pairs):
+* `Effects`: effects for the confound compensation.
+* `ReferenceTable`: table holding features and effects of the healthy population. If `ImpairedTable` is specified this parameter is required.
+* `ImpairedTable`: table holding features and effects of the impaired population. If `ReferenceTable` is specified this parameter is required.
+* `Metrics`: list of metrics to evaluate. Required when using custom data (previous two parameters).
+* `NumFactors`: number of factors for the factor analysis. Obtained with Scree plot (next parameter).
+* `ShowScreePlot`: boolean flag to show scree plot for the number of factors.
+* `NumSimSubj`: number of subjects in the simulated data.
+* `NumSimMetrics`: number of metrics in the simulated data.
+* `SavePlots`: boolean flag to save the plot figures in the `output_plots` directory.
+
+<b>Outputs</b>: 
+* `ref_table` and `impaired_table`: tables with the original and compensated metrics.
+* `metric_scores`: results of the per-metric analysis.
+* `partialcorrs`: partial correlations between metrics.
+* `factor_analysis`: result of the factor analysis.
+
+## Example execution
 The tool outputs the results both on the MATLAB standard output or by displaying figures. In the following, we go through a run of the framework using the default simulated data. You can advance to the next step by clicking with the mouse on displayed figures.
 
 ### Postprocessing, metric selection and validation steps 1 and 2
