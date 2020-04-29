@@ -48,6 +48,8 @@ The complete call would then look similar to the following.
 For a complete description of the available parameters and the output see the next paragraph.
 
 ## Parameters and outputs
+The method signature is `[ref_table, impaired_table, metric_scores, partialcorrs, factor_analysis] = metric_selection_framework(Name, Value)`
+
 <b>Inputs</b> (name-value pairs):
 * `Effects`: effects for the confound compensation.
 * `ReferenceTable`: table holding features and effects of the healthy population. If `ImpairedTable` is specified this parameter is required.
@@ -59,7 +61,7 @@ For a complete description of the available parameters and the output see the ne
 * `NumSimMetrics`: number of metrics in the simulated data.
 * `SavePlots`: boolean flag to save the plot figures in the `output_plots` directory.
 
-<b>Outputs</b>:
+<b>Outputs</b>: 
 * `ref_table` and `impaired_table`: tables with the original and compensated metrics.
 * `metric_scores`: results of the per-metric analysis.
 * `partialcorrs`: partial correlations between metrics.
