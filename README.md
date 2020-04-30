@@ -81,8 +81,8 @@ The partial inter-correlations of the features are displayed in an heatmap.
 ![inter-correlations](/images/partialcorr.png "Partial inter-correlations")
 
 ### Further metric validation step 1
-At this stage, factor analysis is performed. To select the appropriate number of factors `k`, one has to look at the scree plot and pick `k`according to a criteria (e.g. the elbow criteria). `k` can be modified at line 67, and the scree plot can be displayed at this stage by setting `show_scree_plot` to `true` (line 63). The results of the factor analysis are printed to the MATLAB standard output.
+At this stage, factor analysis is performed. To select the appropriate number of factors `k`, one has to look at the scree plot and pick `k`according to a criteria (e.g. the elbow criteria). `k` can be modified with the input parameter `NumFactors`, and the scree plot can be displayed at this stage by setting `ShowScreePlot` to `true`. The results of the factor analysis are printed to the MATLAB standard output.
 
 ### Further metric validation step 2
-Finally, a plot for sub-population analysis is displayed (see Figure 4 in the paper for more information).
+Finally, a plot for sub-population analysis is displayed if your data includes a `disease_severity` column (see Figure 4 in the paper for more information).
 ![sub-population](/images/final_plot.png "Sub-population analysis")
