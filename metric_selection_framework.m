@@ -215,7 +215,7 @@ population = [ref_table; impaired_table];
 population.id = (1:height(population))';
 metrics_mat = table();
 for i = 1:n_metrics
-    metrics_mat.([metrics{i} '_c']) = population.([metrics{i} '_c']);
+    metrics_mat.([metrics{i} '_c']) = ref_table.([metrics{i} '_c']);
 end
 metrics_mat = table2array(metrics_mat);
 
@@ -225,7 +225,8 @@ close all;
 
 % Calculating the cutoff for the metrics with the 95% percentile.
 if any(strcmp(population.Properties.VariableNames, 'disease_severity'))
-abnormal_behaviour_cut_offs = prctile(metrics_mat, 95, 1)';
-visualize_impairment_profile_non_parametric_mad(population, metrics, abnormal_behaviour_cut_offs, save_plots);
+    population.disease_severity = categorical(population.disease_severity);
+    abnormal_behaviour_cut_offs = prctile(metrics_mat, 95, 1)';
+    visualize_impairment_profile_non_parametric_mad(population, metrics, abnormal_behaviour_cut_offs, save_plots);
 end
 
