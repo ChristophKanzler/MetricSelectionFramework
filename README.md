@@ -1,7 +1,7 @@
 # Description
 MATLAB source code for the paper:
 
-A data-driven framework for selecting and validating digital health metrics: use-case in neurological sensorimotor impairments. Christoph M. Kanzler, Mike D. Rinderknecht, Anne Schwarz, Ilse Lamers, Cynthia Gagnon, Jeremia Held, Peter Feys, Andreas R. Luft, Roger Gassert, Olivier Lambercy. npj Digital Medicine, 3, 80 (2020). https://www.nature.com/articles/s41746-020-0286-7 
+**A data-driven framework for selecting and validating digital health metrics: use-case in neurological sensorimotor impairments. Christoph M. Kanzler, Mike D. Rinderknecht, Anne Schwarz, Ilse Lamers, Cynthia Gagnon, Jeremia Held, Peter Feys, Andreas R. Luft, Roger Gassert, Olivier Lambercy. npj Digital Medicine, 3, 80 (2020). https://www.nature.com/articles/s41746-020-0286-7** 
 
 This code will simulate data for multiple digital health metrics for a reference (e.g., neurologically intact) and a target (e.g., neurologocially impaired) population. Based on these data, the proposed multi-step metric selection framework will be applied and all evaluation criteria and plots from the paper will be generated.
 
