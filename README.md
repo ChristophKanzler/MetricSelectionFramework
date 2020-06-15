@@ -9,6 +9,9 @@ This approach is expected to be applicable for any 1D, discrete digital health m
 
 The framework allows the selection of robust metrics that have highest potential for repeatedly assessing impairments based on discriminant validity, test-retest reliability, measurement error, learning effects, and inter-metric correlations.
 
+![Data-driven framework for the selection and validation of digital healh metrics. The framework relies on an initial set of digital health metrics collected with a digital assessment task for a reference (e.g., unaffected controls) and a target (e.g., neurological subjects) population. Five validation and selection steps are implemented that evaluate the metrics based on clinically-relevant statistical concepts, including their clinimetric properties. Throughout these steps, metrics of low statistical quality are discarded, leading to a final set of validated core metrics.](https://github.com/ChristophKanzler/MetricSelectionFramework/blob/master/images/diagram.png?raw=true)
+
+
 ## Requirements
 This code requires MATLAB and the following toolboxes.
 * Statistics and Machine Learning Toolbox
